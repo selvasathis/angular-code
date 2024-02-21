@@ -1,13 +1,3 @@
-# FROM node:20
-# LABEL maintainer="Prakash <prakashmanioutbox@gmail.com>"
-# RUN echo " Try to build my application"
-# WORKDIR /app
-# COPY package.json package-lock.json ./
-# COPY . .
-# RUN npm install
-# EXPOSE 3000
-# ENTRYPOINT ["npm","start"]
-
 # Use an official Node.js runtime as a parent image
 FROM node:20 AS build
 
@@ -33,7 +23,7 @@ RUN ng build
 FROM nginx:alpine
 
 # Copy the built Angular app from the previous stage to the NGINX HTML directory
-COPY --from=build /usr/src/app/dist/app /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist/my-angular-app/browser /usr/share/nginx/html
 
 # Expose port 80 to the outside world
 EXPOSE 80
