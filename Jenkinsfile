@@ -26,18 +26,9 @@ pipeline {
                 }
             }
         }
-        stage('Deploy on Kubernetes') {
-            steps {
-                script {
-                    // Deploy resources on Kubernetes
-                    withKubeCredentials(kubectlCredentials: [[credentialsId: 'k8s-credentials']]) {
-                        sh 'kubectl apply -f kube.yaml'
-                        sh 'kubectl apply -f service.yaml'
-                        sh 'kubectl get pods -o wide'
-                        sh 'kubectl get svc'
-                    }
-                }
-            }
-        }
+        stage ('docker run') {
+          steps {
+            script {
+              sh "docker run -itd --name feature1 -p 8095:80 267765472985.dkr.ecr.ap-northeast-1.amazonaws.com/angular-app:latest"
     }
 }
